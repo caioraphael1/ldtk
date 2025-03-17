@@ -352,21 +352,6 @@ class RulesWizard extends ui.modal.Dialog {
 				jCell.append(jImg);
 				jCell.addClass("defined");
 			}
-			else if( getSymetricalAlternative(f)!=null ) {
-				// Cell is using symetrical alternative
-				var alt = getSymetricalAlternative(f);
-				var jImg = td.createTileHtmlImageFromTileId(fragments.get(alt.f)[0], 48);
-				if( alt.flipX && alt.flipY )
-					jImg.css("transform", "scaleX(-1) scaleY(-1)");
-				else if( alt.flipX )
-					jImg.css("transform", "scaleX(-1)");
-				else if( alt.flipY )
-					jImg.css("transform", "scaleY(-1)");
-
-				jImg.css("opacity", "0.4");
-				jCell.addClass("mirror");
-				jCell.append(jImg);
-			}
 
 			// Cell layout
 			var id = getIconId(f);
@@ -430,11 +415,6 @@ class RulesWizard extends ui.modal.Dialog {
 		}
 	}
 
-	function isSymetricalAltFor(cur:WallFragment, altOf:WallFragment) {
-		var alt = getSymetricalAlternative(altOf);
-		return alt!=null && alt.f==cur;
-	}
-
 	function flip(f:WallFragment, flipX:Bool, flipY:Bool) {
 		return switch f {
 			case Full, Single, Cross : f;
@@ -489,23 +469,6 @@ class RulesWizard extends ui.modal.Dialog {
 			case Corner_SE_to_SE: flipX && flipY ? Corner_NW_to_NW : flipX ? Corner_SW_to_SW : flipY ? Corner_NE_to_NE : f;
 		}
 	}
-
-	function getSymetricalAlternative(f:WallFragment) {
-		var sym = flip(f,true,false);
-		if( sym!=f && fragments.exists(sym) )
-			return { f:sym, flipX:true, flipY:false }
-
-		var sym = flip(f,false,true);
-		if( sym!=f && fragments.exists(sym) )
-			return { f:sym, flipX:false, flipY:true }
-
-		var sym = flip(f,true,true);
-		if( sym!=f && fragments.exists(sym) )
-			return { f:sym, flipX:true, flipY:true }
-
-		return null;
-	}
-
 
 	function setCurrent(?f:WallFragment) {
 		currentFragment = f;
@@ -785,16 +748,6 @@ class RulesWizard extends ui.modal.Dialog {
 		// 		break;
 		// 	}
 		rd.breakOnMatch = breakOnMatch;
-
-		// Update flip X/Y flags
-		for(e in _allFragmentEnums)
-			if( isSymetricalAltFor(f, e) && !fragments.exists(e) ) {
-				var alt = getSymetricalAlternative(e);
-				if( alt.flipX )
-					rd.flipX = true;
-				if( alt.flipY )
-					rd.flipY = true;
-			}
 
 		// Trim & cleanup
 		rd.updateUsedValues();
