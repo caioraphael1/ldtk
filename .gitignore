@@ -14,7 +14,7 @@ res/.tmp
 
 app/*.log
 app/package-lock.json
-app/settings
+# app/settings
 app/redist
 app/node_modules
 app/buildAssets/release-notes.md
