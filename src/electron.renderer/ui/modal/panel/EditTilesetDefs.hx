@@ -220,11 +220,6 @@ class EditTilesetDefs extends ui.modal.Panel {
 		i.linkEvent( TilesetDefChanged(curTd) );
 		i.setBounds(0, curTd.getMaxTileGridSize());
 
-		var i = Input.linkToHtmlInput( curTd.padding, jForm.find("input[name=caio_nome]") );
-		i.linkEvent( TilesetDefChanged(curTd) );
-		i.setBounds(0, curTd.getMaxTileGridSize());
-
-
 		// Tags
 		var ted = new TagEditor(
 			curTd.tags,
@@ -239,6 +234,9 @@ class EditTilesetDefs extends ui.modal.Panel {
 			true
 		);
 		jForm.find("#tags").empty().append(ted.jEditor);
+
+
+
 
 		// Tags source Enum selector
 		var jSelect = jForm.find("#tagsSourceEnumUid");
@@ -300,14 +298,71 @@ class EditTilesetDefs extends ui.modal.Panel {
 			jSelect.addClass("noValue");
 
 
-		// Pivot
+
+		// CAIO: Collision ENUM.
+		// Get the 'colMode' from the `editTilesetDefs.html` file.
+		var jSelect = jForm.find("#colMode");
+		jSelect.empty();
+
+		// Defining the first option, outside of any group.
+		var jOpt = new J('<option value="None">-- None --</option>');
+		jOpt.appendTo(jSelect);
+
+		// Enum group.
+		var jOptGroup = new J('<optgroup label="Shapes"/>');
+		jOptGroup.appendTo(jSelect);
+
+		// Defining the option in the Enum.
+		for(k in ["Rectangle", "Capsule", "Circle"]) {
+			var jOpt = new J('<option value="$k"/>');
+			jOpt.text(k);
+			jOpt.appendTo(jOptGroup);
+		}
+
+		// When a new option is chosen.
+		jSelect.change( function(ev) {
+			// Gets the value and stores it in the variable.
+			curTd.colMode = jSelect.val();
+			// This makes the whole 'updateForm' function to be called again, recreating the entire panel.
+			editor.ge.emit( TilesetDefChanged(curTd) );
+		});
+
+		// Use the value of the variable to defined the value of the class?, something like that; otherwise, use the "noValue" class.
+		if( curTd.colMode != "None" ) {
+			jSelect.removeClass("noValue");
+			jSelect.val(curTd.colMode);
+		}
+		else
+			jSelect.addClass("noValue");
+
+
+		var i = Input.linkToHtmlInput( curTd.colWidth, jForm.find("input[name=colWidth]") );
+		i.setBounds(0, 128);
+		i.setEnabled(curTd.colMode=='Rectangle' || curTd.colMode=='Capsule');
+		i.linkEvent( TilesetDefChanged(curTd) );
+
+		var i = Input.linkToHtmlInput( curTd.colHeight, jForm.find("input[name=colHeight]") );
+		i.setBounds(0, 128);
+		i.setEnabled(curTd.colMode=='Rectangle' || curTd.colMode=='Capsule');
+		i.linkEvent( TilesetDefChanged(curTd) );
+
+		var i = Input.linkToHtmlInput( curTd.colRadius, jForm.find("input[name=colRadius]") );
+		i.setBounds(0, 128);
+		i.setEnabled(curTd.colMode=='Circle');
+		i.linkEvent( TilesetDefChanged(curTd) );
+
+
+		// CAIO: Pivot Point.
 		var jPivots = jForm.find(".pivot");
 		jPivots.empty();
 
 		var p = JsTools.createPivotEditor(
-			curTd.pivotX, curTd.pivotY,
+			curTd.pivotX, 
+			curTd.pivotY,
 			curTd.color,
-			true, curTd.tileGridSize, curTd.tileGridSize,
+			true,
+			curTd.tileGridSize, 
+			curTd.tileGridSize,
 			function(x, y) {
 				curTd.pivotX = x;
 				curTd.pivotY = y;
@@ -315,6 +370,8 @@ class EditTilesetDefs extends ui.modal.Panel {
 			}
 		);
 		jPivots.append(p);
+
+
 
 
 
