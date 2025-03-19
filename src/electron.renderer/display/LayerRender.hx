@@ -55,28 +55,31 @@ class LayerRender {
 	}
 
 
+	// IntGrid
 	static var _cachedIdentityVector = new h3d.Vector4(1,1,1,1);
 	public static inline function renderAutoTileInfos(li:data.inst.LayerInstance, td:data.def.TilesetDef, tileInfos, tg:h2d.TileGroup) {
 		_cachedIdentityVector.a = tileInfos.a;
+		var sx = dn.M.hasBit(tileInfos.flips, 0) ? -1 : 1;
+		var sy = dn.M.hasBit(tileInfos.flips, 1) ? -1 : 1;
 		@:privateAccess tg.content.addTransform(
-			tileInfos.x + ( ( dn.M.hasBit(tileInfos.flips,0)?1:0 ) + td.pivotX ) * li.def.gridSize + li.pxTotalOffsetX,
-			tileInfos.y + ( ( dn.M.hasBit(tileInfos.flips,1)?1:0 ) + td.pivotY ) * li.def.gridSize + li.pxTotalOffsetY,
-			dn.M.hasBit(tileInfos.flips,0)?-1:1,
-			dn.M.hasBit(tileInfos.flips,1)?-1:1,
+			tileInfos.x + ( (sx < 0 ? 1 : 0) - td.pivotX ) * td.tileGridSize + li.pxTotalOffsetX,
+			tileInfos.y + ( (sy < 0 ? 1 : 0) - td.pivotY ) * td.tileGridSize + li.pxTotalOffsetY,
+			sx,
+			sy,
 			0,
 			_cachedIdentityVector,
 			td.getOptimizedTileAt(tileInfos.srcX, tileInfos.srcY)
 		);
 	}
 
-
+	// TileLayers
 	public static inline function renderGridTile(li:data.inst.LayerInstance, td:data.def.TilesetDef, tileInf:data.DataTypes.GridTileInfos, cx:Int, cy:Int, tg:h2d.TileGroup) {
 		var t = td.getTileById(tileInf.tileId);
 		t.setCenterRatio(td.pivotX, td.pivotY);
 		var sx = M.hasBit(tileInf.flips, 0) ? -1 : 1;
 		var sy = M.hasBit(tileInf.flips, 1) ? -1 : 1;
-		var tx = (cx + td.pivotX + (sx<0?1:0)) * li.def.gridSize + li.pxTotalOffsetX;
-		var ty = (cy + td.pivotY + (sy<0?1:0)) * li.def.gridSize + li.pxTotalOffsetY;
+		var tx = (cx +      (sx < 0 ? 1 : 0) + td.pivotX ) * li.def.gridSize + li.pxTotalOffsetX;
+		var ty = (cy +      (sy < 0 ? 1 : 0) + td.pivotY ) * li.def.gridSize + li.pxTotalOffsetY;
 		tg.addTransform(tx, ty, sx, sy, 0, t);
 	}
 

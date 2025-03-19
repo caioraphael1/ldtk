@@ -324,8 +324,8 @@ class LayerInstance {
 		var out = new Map();
 		for( tid in tileIds )
 			out.set( tid, {
-				xOff: Std.int( ( td.getTileCx(tid)-left - rule.pivotX*(right-left) + td.pivotX ) * def.gridSize ) * (dn.M.hasBit(flipBits,0)?-1:1),
-				yOff: Std.int( ( td.getTileCy(tid)-top - rule.pivotY*(bottom-top) + td.pivotY ) * def.gridSize ) * (dn.M.hasBit(flipBits,1)?-1:1)
+				xOff: Std.int( ( td.getTileCx(tid) - left - rule.pivotX * (right - left) + td.pivotX ) * td.tileGridSize ) * (dn.M.hasBit(flipBits, 0) ? -1 : 1),
+				yOff: Std.int( ( td.getTileCy(tid) - top  - rule.pivotY * (bottom - top) + td.pivotY ) * td.tileGridSize ) * (dn.M.hasBit(flipBits, 1) ? -1 : 1)
 			});
 		return out;
 	}

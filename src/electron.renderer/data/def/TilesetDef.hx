@@ -5,8 +5,9 @@ import data.DataTypes;
 class TilesetDef {
 	var _project : Project;
 
-	@:allow(data.Definitions)
+	@:allow(data.Definitions)  // Affects only the uid.
 	public var uid(default,null) : Int;
+
 	public var identifier(default,set) : String;
 	public var relPath(default,null) : Null<String>;
 	public var embedAtlas : Null<ldtk.Json.EmbedAtlas>;
@@ -16,7 +17,6 @@ class TilesetDef {
 	public var savedSelections : Array<TilesetSelection> = [];
 
 
-
 	public var colMode: String;
 	public var colWidth: Float;
 	public var colHeight: Float;
@@ -24,11 +24,6 @@ class TilesetDef {
 
 	public var pivotX(default,set) : Float;
 	public var pivotY(default,set) : Float;
-	public var width : Int;
-	public var height : Int;
-	public var color : UInt;
-
-
 	
 
 	var customData : Map<Int, String> = new Map();
@@ -70,14 +65,12 @@ class TilesetDef {
 		identifier = "Tileset"+uid;
 		tags = new Tags();
 
-		// Initial values.
 		colMode = "None";
 		colWidth = 0.0;
 		colHeight = 0.0;
 		colRadius = 0.0;
 
-		color = Const.suggestNiceColor( _project.defs.entities.map(ed->ed.color) );
-		setPivot(0.5,1);
+		setPivot(0.0, 0.0);
 	}
 
 	public function toString() {

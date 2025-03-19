@@ -359,7 +359,7 @@ class EditTilesetDefs extends ui.modal.Panel {
 		var p = JsTools.createPivotEditor(
 			curTd.pivotX, 
 			curTd.pivotY,
-			curTd.color,
+			0x0,
 			true,
 			curTd.tileGridSize, 
 			curTd.tileGridSize,
