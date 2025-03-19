@@ -440,8 +440,10 @@ class EditProject extends ui.modal.Panel {
 		var pivot = jForms.find(".pivot");
 		pivot.empty();
 		pivot.append( JsTools.createPivotEditor(
-			project.defaultPivotX, project.defaultPivotY,
+			project.defaultPivotX, 
+			project.defaultPivotY,
 			0x0,
+			false,
 			function(x,y) {
 				project.defaultPivotX = x;
 				project.defaultPivotY = y;

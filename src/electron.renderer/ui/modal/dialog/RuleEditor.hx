@@ -204,11 +204,16 @@ class RuleEditor extends ui.modal.Dialog {
 		switch rule.tileMode {
 			case Single:
 			case Stamp:
-				var jPivot = JsTools.createPivotEditor(rule.pivotX, rule.pivotY, (xr,yr)->{
-					rule.pivotX = xr;
-					rule.pivotY = yr;
-					onAnyRuleChange();
-					renderAll();
+				var jPivot = JsTools.createPivotEditor(
+					rule.pivotX, 
+					rule.pivotY,
+					0x0,
+					true,
+					(xr,yr)->{
+						rule.pivotX = xr;
+						rule.pivotY = yr;
+						onAnyRuleChange();
+						renderAll();
 				});
 				jTileOptions.append(jPivot);
 		}

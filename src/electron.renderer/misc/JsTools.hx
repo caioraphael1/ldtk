@@ -423,7 +423,7 @@ class JsTools {
 	}
 
 
-	public static function createPivotEditor( curPivotX:Float, curPivotY:Float, ?bgColor:dn.Col, allowAdvanced=false, ?width:Int, ?height:Int, onPivotChange:(pivotX:Float, pivotY:Float)->Void ) {
+	public static function createPivotEditor( curPivotX:Float, curPivotY:Float, ?bgColor:dn.Col, allowAdvanced=true, ?width:Int, ?height:Int, onPivotChange:(pivotX:Float, pivotY:Float)->Void ) {
 		var jPivots = new J( getHtmlTemplate("pivotEditor") );
 
 
@@ -446,24 +446,13 @@ class JsTools {
 			});
 		});
 
-		// Advanced link
-		var jAdvLink = jPivots.find("a.show");
-		if( allowAdvanced )
-			jAdvLink.click( (ev:js.jquery.Event)->{
-				ev.preventDefault();
-				jPivots.addClass("showAdvanced");
-			});
-		else
-			jAdvLink.hide();
-
-		// Auto open advanced panel
-		var xr = curPivotX;
-		var yr = curPivotY;
-		if( allowAdvanced && ( xr!=0 && xr!=0.5 && xr!=1 || yr!=0 && yr!=0.5 && yr!=1 ) )
-			jAdvLink.click();
-
 		// Advanced form
 		if( allowAdvanced ) {
+			jPivots.addClass("showAdvanced");
+
+			var xr = curPivotX;
+			var yr = curPivotY;
+
 			var jAdvanced = jPivots.find(".advanced .options");
 
 			// X float

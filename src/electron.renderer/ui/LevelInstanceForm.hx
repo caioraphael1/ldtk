@@ -328,7 +328,8 @@ class LevelInstanceForm {
 			var imgInf = level.getBgTileInfos();
 			if( imgInf!=null ) {
 				jPivot.append( JsTools.createPivotEditor(
-					level.bgPivotX, level.bgPivotY,
+					level.bgPivotX, 
+					level.bgPivotY,
 					true,
 					Std.int( imgInf.tw ),
 					Std.int( imgInf.th ),

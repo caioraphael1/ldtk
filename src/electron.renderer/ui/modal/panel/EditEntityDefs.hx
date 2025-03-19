@@ -551,9 +551,12 @@ class EditEntityDefs extends ui.modal.Panel {
 		var jPivots = jEntityForm.find(".pivot");
 		jPivots.empty();
 		var p = JsTools.createPivotEditor(
-			curEntity.pivotX, curEntity.pivotY,
+			curEntity.pivotX, 
+			curEntity.pivotY,
 			curEntity.color,
-			true, curEntity.width, curEntity.height,
+			true, 
+			curEntity.width, 
+			curEntity.height,
 			function(x,y) {
 				curEntity.pivotX = x;
 				curEntity.pivotY = y;
