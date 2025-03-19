@@ -229,7 +229,7 @@ class Cursor {
 						bottom = M.imax( bottom, td.getTileCy(tid) );
 					}
 
-					var gridDiffScale = M.imax(1, M.round( td.tileGridSize / li.def.gridSize ) );
+					// var gridDiffScale = M.imax(1, M.round( td.tileGridSize / li.def.gridSize ) );
 					var flipX = M.hasBit(flips,0);
 					var flipY = M.hasBit(flips,1);
 					for(tid in tileIds) {
@@ -239,13 +239,12 @@ class Cursor {
 
 						// I think this refers to the tile preview placement.
 						bmp.tile.setCenterRatio(td.pivotX, td.pivotY);
-			
-						var pivotOffsetX = (flipX ? right  - 2 * td.pivotX + 1 : -left) + cx;
-						var pivotOffsetY = (flipY ? bottom - 2 * td.pivotY + 1 : -top ) + cy;
-						bmp.x = ( pivotOffsetX * gridDiffScale + td.pivotX ) * li.def.gridSize;
-						bmp.y = ( pivotOffsetY * gridDiffScale + td.pivotY ) * li.def.gridSize;
-						// bmp.x = ((flipX ? right  - cx + 1 - 2 * td.pivotX : cx - left )) * li.def.gridSize * gridDiffScale + td.pivotX * li.def.gridSize;
-						// bmp.y = ((flipY ? bottom - cy + 1 - 2 * td.pivotY : cy - top  )) * li.def.gridSize * gridDiffScale + td.pivotY * li.def.gridSize;
+	
+						var pivotOffsetX = cx + (flipX ? right  + 1 - 2 * td.pivotX : -left);
+						var pivotOffsetY = cy + (flipY ? bottom + 1 - 2 * td.pivotY : -top );
+						bmp.x = ( pivotOffsetX * td.tileGridSize) + td.pivotX * li.def.gridSize;
+						bmp.y = ( pivotOffsetY * td.tileGridSize) + td.pivotY * li.def.gridSize;
+
 						bmp.scaleX = flipX ? -1 : 1;
 						bmp.scaleY = flipY ? -1 : 1;
 					}

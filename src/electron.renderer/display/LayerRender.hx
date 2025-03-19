@@ -59,32 +59,59 @@ class LayerRender {
 	static var _cachedIdentityVector = new h3d.Vector4(1,1,1,1);
 	public static inline function renderAutoTileInfos(li:data.inst.LayerInstance, td:data.def.TilesetDef, tileInfos, tg:h2d.TileGroup) {
 		_cachedIdentityVector.a = tileInfos.a;
+	
 		var sx = dn.M.hasBit(tileInfos.flips, 0) ? -1 : 1;
 		var sy = dn.M.hasBit(tileInfos.flips, 1) ? -1 : 1;
+
 		var flipX = sx < 0;
 		var flipY = sy < 0;
-		@:privateAccess tg.content.addTransform(
-			tileInfos.x + ( (flipX ? 1 : 0) - td.pivotX ) * td.tileGridSize + li.pxTotalOffsetX,
-			tileInfos.y + ( (flipY ? 1 : 0) - td.pivotY ) * td.tileGridSize + li.pxTotalOffsetY,
-			sx,
-			sy,
-			0,
-			_cachedIdentityVector,
-			td.getOptimizedTileAt(tileInfos.srcX, tileInfos.srcY)
-		);
+		var pivotOffsetX =  
+				(flipX ? 
+					1 
+				: 
+					0)
+				- td.pivotX;
+		var pivotOffsetY = 
+				(flipY ? 
+					1 
+				: 
+					0) 
+				- td.pivotY;
+		var tx = tileInfos.x  +  pivotOffsetX * td.tileGridSize  +  li.pxTotalOffsetX;
+		var ty = tileInfos.y  +  pivotOffsetY * td.tileGridSize  +  li.pxTotalOffsetY;
+
+		var t = td.getOptimizedTileAt(tileInfos.srcX, tileInfos.srcY);
+
+		@:privateAccess 
+		tg.content.addTransform(tx, ty, sx, sy,	0, _cachedIdentityVector, t);
 	}
 
 	// TileLayers
 	public static inline function renderGridTile(li:data.inst.LayerInstance, td:data.def.TilesetDef, tileInf:data.DataTypes.GridTileInfos, cx:Int, cy:Int, tg:h2d.TileGroup) {
 		var t = td.getTileById(tileInf.tileId);
 		t.setCenterRatio(td.pivotX, td.pivotY);
+
 		var sx = M.hasBit(tileInf.flips, 0) ? -1 : 1;
 		var sy = M.hasBit(tileInf.flips, 1) ? -1 : 1;
+
+		var gridDiffScale = M.imax(1, M.round( td.tileGridSize / li.def.gridSize ) );
 		var flipX = sx < 0;
 		var flipY = sy < 0;
-		var gridDiffScale = M.imax(1, M.round( td.tileGridSize / li.def.gridSize ) );
-		var tx = (cx + (flipX ? gridDiffScale - td.pivotX : td.pivotX ) ) * li.def.gridSize + li.pxTotalOffsetX;
-		var ty = (cy + (flipY ? gridDiffScale - td.pivotY : td.pivotY ) ) * li.def.gridSize + li.pxTotalOffsetY;
+		var pivotOffsetX = 
+				cx + 
+				(flipX ? 
+					(gridDiffScale + td.pivotX * (1 - 2 * gridDiffScale))
+				: 
+					td.pivotX);
+		var pivotOffsetY = 
+				cy + 
+				(flipY ?
+					(gridDiffScale + td.pivotY * (1 - 2 * gridDiffScale))
+				: 
+					td.pivotY);
+		var tx = pivotOffsetX * li.def.gridSize  +  li.pxTotalOffsetX;
+		var ty = pivotOffsetY * li.def.gridSize  +  li.pxTotalOffsetY;
+
 		tg.addTransform(tx, ty, sx, sy, 0, t);
 	}
 
