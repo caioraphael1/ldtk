@@ -477,6 +477,9 @@ class JsTools {
 			var i = Input.linkToHtmlInput(pixelY, jAdvanced.find('[name="customPixelY"]'));
 			i.setBounds(-2048,2048);
 			i.onValueChange = (v)->onPivotChange(xr, v/height);
+		} else {
+			var jAdvLink = jPivots.find("a.show");
+			jAdvLink.hide();
 		}
 
 		return jPivots;

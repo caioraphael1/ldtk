@@ -236,7 +236,7 @@ class Cursor {
 						var cx = td.getTileCx(tid);
 						var cy = td.getTileCy(tid);
 						var bmp = new h2d.Bitmap( td.getTileById(tid), wrapper );
-						bmp.tile.setCenterRatio(li.def.tilePivotX, li.def.tilePivotY);
+						bmp.tile.setCenterRatio(td.pivotX, td.pivotY);
 						bmp.x = (flipX ? right-cx+1 : cx-left) * li.def.gridSize * gridDiffScale;
 						bmp.y = (flipY ? bottom-cy+1 : cy-top) * li.def.gridSize * gridDiffScale;
 						bmp.scaleX = flipX ? -1 : 1;

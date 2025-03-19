@@ -59,8 +59,8 @@ class LayerRender {
 	public static inline function renderAutoTileInfos(li:data.inst.LayerInstance, td:data.def.TilesetDef, tileInfos, tg:h2d.TileGroup) {
 		_cachedIdentityVector.a = tileInfos.a;
 		@:privateAccess tg.content.addTransform(
-			tileInfos.x + ( ( dn.M.hasBit(tileInfos.flips,0)?1:0 ) + li.def.tilePivotX ) * li.def.gridSize + li.pxTotalOffsetX,
-			tileInfos.y + ( ( dn.M.hasBit(tileInfos.flips,1)?1:0 ) + li.def.tilePivotY ) * li.def.gridSize + li.pxTotalOffsetY,
+			tileInfos.x + ( ( dn.M.hasBit(tileInfos.flips,0)?1:0 ) + td.pivotX ) * li.def.gridSize + li.pxTotalOffsetX,
+			tileInfos.y + ( ( dn.M.hasBit(tileInfos.flips,1)?1:0 ) + td.pivotY ) * li.def.gridSize + li.pxTotalOffsetY,
 			dn.M.hasBit(tileInfos.flips,0)?-1:1,
 			dn.M.hasBit(tileInfos.flips,1)?-1:1,
 			0,
@@ -72,11 +72,11 @@ class LayerRender {
 
 	public static inline function renderGridTile(li:data.inst.LayerInstance, td:data.def.TilesetDef, tileInf:data.DataTypes.GridTileInfos, cx:Int, cy:Int, tg:h2d.TileGroup) {
 		var t = td.getTileById(tileInf.tileId);
-		t.setCenterRatio(li.def.tilePivotX, li.def.tilePivotY);
+		t.setCenterRatio(td.pivotX, td.pivotY);
 		var sx = M.hasBit(tileInf.flips, 0) ? -1 : 1;
 		var sy = M.hasBit(tileInf.flips, 1) ? -1 : 1;
-		var tx = (cx + li.def.tilePivotX + (sx<0?1:0)) * li.def.gridSize + li.pxTotalOffsetX;
-		var ty = (cy + li.def.tilePivotX + (sy<0?1:0)) * li.def.gridSize + li.pxTotalOffsetY;
+		var tx = (cx + td.pivotX + (sx<0?1:0)) * li.def.gridSize + li.pxTotalOffsetX;
+		var ty = (cy + td.pivotY + (sy<0?1:0)) * li.def.gridSize + li.pxTotalOffsetY;
 		tg.addTransform(tx, ty, sx, sy, 0, t);
 	}
 
@@ -148,8 +148,8 @@ class LayerRender {
 									if( td.hasTag(ev.id, tileInfos.tid)) {
 										gr.lineStyle(1, ev.color, 1);
 										gr.drawRect(
-											tileInfos.x + li.def.tilePivotX*li.def.gridSize + li.pxTotalOffsetX,
-											tileInfos.y + li.def.tilePivotY*li.def.gridSize + li.pxTotalOffsetY,
+											tileInfos.x + td.pivotX * li.def.gridSize + li.pxTotalOffsetX,
+											tileInfos.y + td.pivotY * li.def.gridSize + li.pxTotalOffsetY,
 											li.def.gridSize - 1 - n * 2,
 											li.def.gridSize - 1 - n * 2
 										);
@@ -212,8 +212,8 @@ class LayerRender {
 								if( td.hasTag(ev.id, tileInf.tileId)) {
 									gr.lineStyle(1, ev.color, 1);
 									gr.drawRect(
-										(cx + li.def.tilePivotX)*li.def.gridSize + li.pxTotalOffsetX  +  n + .5,
-										(cy + li.def.tilePivotY)*li.def.gridSize + li.pxTotalOffsetY  +  n + .5,
+										(cx + td.pivotX) * li.def.gridSize + li.pxTotalOffsetX  +  n + .5,
+										(cy + td.pivotY) * li.def.gridSize + li.pxTotalOffsetY  +  n + .5,
 										li.def.gridSize - 1 - n * 2,
 										li.def.gridSize - 1 - n * 2
 									);
@@ -232,8 +232,8 @@ class LayerRender {
 				for(cx in 0...li.cWid)
 					if( li.hasAnyGridTile(cx,cy) )
 						tg.add(
-							(cx + li.def.tilePivotX) * li.def.gridSize,
-							(cy + li.def.tilePivotX) * li.def.gridSize,
+							(cx + 0) * li.def.gridSize,
+							(cy + 0) * li.def.gridSize,
 							tileError
 						);
 			}
