@@ -174,6 +174,10 @@ class TilesetDef {
 
 			pivotX: JsonTools.writeFloat( pivotX ),
 			pivotY: JsonTools.writeFloat( pivotY ),
+			colMode: colMode,
+			colWidth: JsonTools.writeFloat( colWidth ),
+			colHeight: JsonTools.writeFloat( colHeight ),
+			colRadius: JsonTools.writeFloat( colRadius ),
 
 			customData: {
 				var all = [];
@@ -222,6 +226,13 @@ class TilesetDef {
 
 		td.pivotX = JsonTools.readFloat( json.pivotX, 0 );
 		td.pivotY = JsonTools.readFloat( json.pivotY, 0 );
+
+		// Collision Metadada
+		td.colMode   = JsonTools.readString(json.colMode, "None");
+		td.colWidth  = JsonTools.readFloat( json.colWidth,  0 );
+		td.colHeight = JsonTools.readFloat( json.colHeight, 0 );
+		td.colRadius = JsonTools.readFloat( json.colRadius, 0 );
+		
 		// Enum tags
 		if( (cast json).metaDataEnumUid!=null ) json.tagsSourceEnumUid = (cast json).metaDataEnumUid;
 		td.tagsSourceEnumUid = JsonTools.readNullableInt(json.tagsSourceEnumUid);
