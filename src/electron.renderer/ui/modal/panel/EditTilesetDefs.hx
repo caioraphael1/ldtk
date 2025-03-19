@@ -220,6 +220,10 @@ class EditTilesetDefs extends ui.modal.Panel {
 		i.linkEvent( TilesetDefChanged(curTd) );
 		i.setBounds(0, curTd.getMaxTileGridSize());
 
+		var i = Input.linkToHtmlInput( curTd.padding, jForm.find("input[name=caio_nome]") );
+		i.linkEvent( TilesetDefChanged(curTd) );
+		i.setBounds(0, curTd.getMaxTileGridSize());
+
 
 		// Tags
 		var ted = new TagEditor(
@@ -239,14 +243,19 @@ class EditTilesetDefs extends ui.modal.Panel {
 		// Tags source Enum selector
 		var jSelect = jForm.find("#tagsSourceEnumUid");
 		jSelect.empty();
+
 		var jOpt = new J('<option value="">-- None --</option>');
 		jOpt.appendTo(jSelect);
+
 		var tagGroups = project.defs.getAllEnumsGroupedByTag();
 		for( group in tagGroups ) {
+
 			var jOptGroup = new J('<optgroup label="All enums"/>');
 			jOptGroup.appendTo(jSelect);
+
 			if( tagGroups.length>1 )
 				jOptGroup.attr('label', group.tag==null ? L._Untagged() : group.tag);
+
 			for(ed in group.all) {
 				var jOpt = new J('<option value="${ed.uid}">${ed.identifier}</option>');
 				if( ed.isExternal() ) {
@@ -256,7 +265,9 @@ class EditTilesetDefs extends ui.modal.Panel {
 				jOpt.appendTo(jOptGroup);
 			}
 		}
+
 		var oldUid = curTd.tagsSourceEnumUid;
+		
 		jSelect.change( ev->{
 			// Change enum
 			var uid = Std.parseInt( jSelect.val() );
@@ -287,6 +298,25 @@ class EditTilesetDefs extends ui.modal.Panel {
 		}
 		else
 			jSelect.addClass("noValue");
+
+
+		// Pivot
+		var jPivots = jForm.find(".pivot");
+		jPivots.empty();
+
+		var p = JsTools.createPivotEditor(
+			curTd.pivotX, curTd.pivotY,
+			curTd.color,
+			true, curTd.tileGridSize, curTd.tileGridSize,
+			function(x, y) {
+				curTd.pivotX = x;
+				curTd.pivotY = y;
+				editor.ge.emit(TilesetDefChanged(curTd));
+			}
+		);
+		jPivots.append(p);
+
+
 
 		JsTools.parseComponents(jForm);
 		checkBackup();

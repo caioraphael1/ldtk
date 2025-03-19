@@ -8,7 +8,7 @@ if %errorlevel% neq 0 (
     pause
     exit /b %errorlevel%
 )
-echo Sucesso ao compilar main.debug.hxml.
+echo "> Sucesso."
 
 
 echo Compilando renderer.debug.hxml...
@@ -18,6 +18,6 @@ if %errorlevel% neq 0 (
     pause
     exit /b %errorlevel%
 )
-echo Sucesso ao compilar renderer.debug.hxml.
+echo "> Sucesso."
 
 pause

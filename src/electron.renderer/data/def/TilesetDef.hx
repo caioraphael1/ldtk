@@ -14,6 +14,18 @@ class TilesetDef {
 	public var padding : Int = 0; // px dist to atlas borders
 	public var spacing : Int = 0; // px space between consecutive tiles
 	public var savedSelections : Array<TilesetSelection> = [];
+
+
+
+	public var pivotX(default,set) : Float;
+	public var pivotY(default,set) : Float;
+	public var width : Int;
+	public var height : Int;
+	public var color : UInt;
+
+
+	
+
 	var customData : Map<Int, String> = new Map();
 
 	public var tagsSourceEnumUid : Null<Int>;
@@ -37,11 +49,23 @@ class TilesetDef {
 	var cachedTiles : Map<Int,h2d.Tile> = new Map();
 
 
+
+
+	public inline function setPivot(x,y) {
+		pivotX = x;
+		pivotY = y;
+	}
+	inline function set_pivotX(v) return pivotX = v;
+	inline function set_pivotY(v) return pivotY = v;
+
+
 	public function new(p:Project, uid:Int) {
 		_project = p;
 		this.uid = uid;
 		identifier = "Tileset"+uid;
 		tags = new Tags();
+		color = Const.suggestNiceColor( _project.defs.entities.map(ed->ed.color) );
+		setPivot(0.5,1);
 	}
 
 	public function toString() {
@@ -143,6 +167,10 @@ class TilesetDef {
 				}
 			},
 
+			color: JsonTools.writeColor(color),
+			pivotX: JsonTools.writeFloat( pivotX ),
+			pivotY: JsonTools.writeFloat( pivotY ),
+
 			customData: {
 				var all = [];
 				for(d in customData.keyValueIterator())
@@ -187,6 +215,10 @@ class TilesetDef {
 		td.embedAtlas = JsonTools.readEnum(ldtk.Json.EmbedAtlas, json.embedAtlas, true);
 		td.identifier = JsonTools.readString(json.identifier, "Tileset"+td.uid);
 		td.tags = Tags.fromJson(json.tags);
+
+		td.pivotX = JsonTools.readFloat( json.pivotX, 0 );
+		td.pivotY = JsonTools.readFloat( json.pivotY, 0 );
+		td.color = JsonTools.readColor( json.color, 0x0 );
 
 		// Enum tags
 		if( (cast json).metaDataEnumUid!=null ) json.tagsSourceEnumUid = (cast json).metaDataEnumUid;
