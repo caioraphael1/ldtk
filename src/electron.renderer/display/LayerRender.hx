@@ -61,9 +61,11 @@ class LayerRender {
 		_cachedIdentityVector.a = tileInfos.a;
 		var sx = dn.M.hasBit(tileInfos.flips, 0) ? -1 : 1;
 		var sy = dn.M.hasBit(tileInfos.flips, 1) ? -1 : 1;
+		var flipX = sx < 0;
+		var flipY = sy < 0;
 		@:privateAccess tg.content.addTransform(
-			tileInfos.x + ( (sx < 0 ? 1 : 0) - td.pivotX ) * td.tileGridSize + li.pxTotalOffsetX,
-			tileInfos.y + ( (sy < 0 ? 1 : 0) - td.pivotY ) * td.tileGridSize + li.pxTotalOffsetY,
+			tileInfos.x + ( (flipX ? 1 : 0) - td.pivotX ) * td.tileGridSize + li.pxTotalOffsetX,
+			tileInfos.y + ( (flipY ? 1 : 0) - td.pivotY ) * td.tileGridSize + li.pxTotalOffsetY,
 			sx,
 			sy,
 			0,
@@ -78,8 +80,11 @@ class LayerRender {
 		t.setCenterRatio(td.pivotX, td.pivotY);
 		var sx = M.hasBit(tileInf.flips, 0) ? -1 : 1;
 		var sy = M.hasBit(tileInf.flips, 1) ? -1 : 1;
-		var tx = (cx +      (sx < 0 ? 1 : 0) + td.pivotX ) * li.def.gridSize + li.pxTotalOffsetX;
-		var ty = (cy +      (sy < 0 ? 1 : 0) + td.pivotY ) * li.def.gridSize + li.pxTotalOffsetY;
+		var flipX = sx < 0;
+		var flipY = sy < 0;
+		var gridDiffScale = M.imax(1, M.round( td.tileGridSize / li.def.gridSize ) );
+		var tx = (cx + (flipX ? gridDiffScale - td.pivotX : td.pivotX ) ) * li.def.gridSize + li.pxTotalOffsetX;
+		var ty = (cy + (flipY ? gridDiffScale - td.pivotY : td.pivotY ) ) * li.def.gridSize + li.pxTotalOffsetY;
 		tg.addTransform(tx, ty, sx, sy, 0, t);
 	}
 

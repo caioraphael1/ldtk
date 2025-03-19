@@ -223,9 +223,9 @@ class Cursor {
 					var top = Const.INFINITE;
 					var bottom = 0;
 					for(tid in tileIds) {
-						left = M.imin( left, td.getTileCx(tid) );
-						right = M.imax( right, td.getTileCx(tid) );
-						top = M.imin( top, td.getTileCy(tid) );
+						left   = M.imin( left,   td.getTileCx(tid) );
+						right  = M.imax( right,  td.getTileCx(tid) );
+						top    = M.imin( top,    td.getTileCy(tid) );
 						bottom = M.imax( bottom, td.getTileCy(tid) );
 					}
 
@@ -236,9 +236,16 @@ class Cursor {
 						var cx = td.getTileCx(tid);
 						var cy = td.getTileCy(tid);
 						var bmp = new h2d.Bitmap( td.getTileById(tid), wrapper );
+
+						// I think this refers to the tile preview placement.
 						bmp.tile.setCenterRatio(td.pivotX, td.pivotY);
-						bmp.x = (flipX ? right-cx+1 : cx-left) * li.def.gridSize * gridDiffScale;
-						bmp.y = (flipY ? bottom-cy+1 : cy-top) * li.def.gridSize * gridDiffScale;
+			
+						var pivotOffsetX = (flipX ? right  - 2 * td.pivotX + 1 : -left) + cx;
+						var pivotOffsetY = (flipY ? bottom - 2 * td.pivotY + 1 : -top ) + cy;
+						bmp.x = ( pivotOffsetX * gridDiffScale + td.pivotX ) * li.def.gridSize;
+						bmp.y = ( pivotOffsetY * gridDiffScale + td.pivotY ) * li.def.gridSize;
+						// bmp.x = ((flipX ? right  - cx + 1 - 2 * td.pivotX : cx - left )) * li.def.gridSize * gridDiffScale + td.pivotX * li.def.gridSize;
+						// bmp.y = ((flipY ? bottom - cy + 1 - 2 * td.pivotY : cy - top  )) * li.def.gridSize * gridDiffScale + td.pivotY * li.def.gridSize;
 						bmp.scaleX = flipX ? -1 : 1;
 						bmp.scaleY = flipY ? -1 : 1;
 					}
