@@ -48,10 +48,6 @@ class LayerDef {
 		inline function get_autoSourceLd() return type==AutoLayer && autoSourceLayerDefUid!=null ? _project.defs.getLayerDef(autoSourceLayerDefUid) : null;
 	public var autoTilesKilledByOtherLayerUid: Null<Int>;
 
-	// Tiles
-	public var tilePivotX(default,set) : Float = 0;
-	public var tilePivotY(default,set) : Float = 0;
-
 	public function new(p:Project, uid:Int, t:ldtk.Json.LayerType) {
 		_project = p;
 		this.uid = uid;
@@ -163,8 +159,6 @@ class LayerDef {
 		}
 
 		o.tilesetDefUid = JsonTools.readNullableInt(json.tilesetDefUid);
-		o.tilePivotX = JsonTools.readFloat(json.tilePivotX, 0);
-		o.tilePivotY = JsonTools.readFloat(json.tilePivotY, 0);
 
 		return o;
 	}
@@ -217,8 +211,6 @@ class LayerDef {
 			autoSourceLayerDefUid: autoSourceLayerDefUid,
 
 			tilesetDefUid: tilesetDefUid,
-			tilePivotX: tilePivotX,
-			tilePivotY: tilePivotY,
 
 			biomeFieldUid: biomeFieldUid,
 		}
@@ -462,10 +454,6 @@ class LayerDef {
 
 		return true;
 	}
-
-
-	inline function set_tilePivotX(v) return tilePivotX = dn.M.fclamp(v, 0, 1);
-	inline function set_tilePivotY(v) return tilePivotY = dn.M.fclamp(v, 0, 1);
 
 
 	public inline function isAutoLayer() {
