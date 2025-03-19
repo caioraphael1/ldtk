@@ -172,7 +172,6 @@ class TilesetDef {
 				}
 			},
 
-			color: JsonTools.writeColor(color),
 			pivotX: JsonTools.writeFloat( pivotX ),
 			pivotY: JsonTools.writeFloat( pivotY ),
 
@@ -223,8 +222,6 @@ class TilesetDef {
 
 		td.pivotX = JsonTools.readFloat( json.pivotX, 0 );
 		td.pivotY = JsonTools.readFloat( json.pivotY, 0 );
-		td.color = JsonTools.readColor( json.color, 0x0 );
-
 		// Enum tags
 		if( (cast json).metaDataEnumUid!=null ) json.tagsSourceEnumUid = (cast json).metaDataEnumUid;
 		td.tagsSourceEnumUid = JsonTools.readNullableInt(json.tagsSourceEnumUid);
