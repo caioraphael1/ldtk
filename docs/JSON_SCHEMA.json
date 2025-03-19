@@ -2204,7 +2204,10 @@
 				"tags",
 				"tileGridSize",
 				"uid",
-				"savedSelections"
+				"savedSelections",
+				"pivotX",
+				"pivotY",
+				"color"
 			],
 			"additionalProperties": false,
 			"properties": {
@@ -2328,6 +2331,24 @@
 					"description": "",
 					"type": [
 						"integer"
+					]
+				},
+				"pivotX": {
+					"description": "",
+					"type": [
+						"number"
+					]
+				},
+				"pivotY": {
+					"description": "",
+					"type": [
+						"number"
+					]
+				},
+				"color": {
+					"description": "",
+					"type": [
+						"string"
 					]
 				}
 			},
@@ -2486,8 +2507,6 @@
 				"inactiveOpacity",
 				"renderInWorldView",
 				"requiredTags",
-				"tilePivotX",
-				"tilePivotY",
 				"type",
 				"uiFilterTags",
 				"useAsyncRender"
@@ -2498,12 +2517,6 @@
 					"description": "X offset of the layer, in pixels (IMPORTANT: this should be added to the `LayerInstance` optional offset)",
 					"type": [
 						"integer"
-					]
-				},
-				"tilePivotX": {
-					"description": "If the tiles are smaller or larger than the layer grid, the pivot value will be used to position the tile relatively its grid cell.",
-					"type": [
-						"number"
 					]
 				},
 				"uiFilterTags": {
@@ -2698,12 +2711,6 @@
 					"description": "Y offset of the layer, in pixels (IMPORTANT: this should be added to the `LayerInstance` optional offset)",
 					"type": [
 						"integer"
-					]
-				},
-				"tilePivotY": {
-					"description": "If the tiles are smaller or larger than the layer grid, the pivot value will be used to position the tile relatively its grid cell.",
-					"type": [
-						"number"
 					]
 				},
 				"biomeFieldUid": {

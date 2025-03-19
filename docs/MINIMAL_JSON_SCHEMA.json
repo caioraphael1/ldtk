@@ -1242,7 +1242,10 @@
 				"spacing",
 				"tags",
 				"tileGridSize",
-				"uid"
+				"uid",
+				"pivotX",
+				"pivotY",
+				"color"
 			],
 			"additionalProperties": false,
 			"properties": {
@@ -1349,6 +1352,24 @@
 					"description": "",
 					"type": [
 						"integer"
+					]
+				},
+				"pivotX": {
+					"description": "",
+					"type": [
+						"number"
+					]
+				},
+				"pivotY": {
+					"description": "",
+					"type": [
+						"number"
+					]
+				},
+				"color": {
+					"description": "",
+					"type": [
+						"string"
 					]
 				}
 			},
