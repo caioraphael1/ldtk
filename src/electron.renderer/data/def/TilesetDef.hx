@@ -172,9 +172,9 @@ class TilesetDef {
 				}
 			},
 
-			// color: JsonTools.writeColor(color),
-			// pivotX: JsonTools.writeFloat( pivotX ),
-			// pivotY: JsonTools.writeFloat( pivotY ),
+			color: JsonTools.writeColor(color),
+			pivotX: JsonTools.writeFloat( pivotX ),
+			pivotY: JsonTools.writeFloat( pivotY ),
 
 			customData: {
 				var all = [];
@@ -221,9 +221,9 @@ class TilesetDef {
 		td.identifier = JsonTools.readString(json.identifier, "Tileset"+td.uid);
 		td.tags = Tags.fromJson(json.tags);
 
-		// td.pivotX = JsonTools.readFloat( json.pivotX, 0 );
-		// td.pivotY = JsonTools.readFloat( json.pivotY, 0 );
-		// td.color = JsonTools.readColor( json.color, 0x0 );
+		td.pivotX = JsonTools.readFloat( json.pivotX, 0 );
+		td.pivotY = JsonTools.readFloat( json.pivotY, 0 );
+		td.color = JsonTools.readColor( json.color, 0x0 );
 
 		// Enum tags
 		if( (cast json).metaDataEnumUid!=null ) json.tagsSourceEnumUid = (cast json).metaDataEnumUid;

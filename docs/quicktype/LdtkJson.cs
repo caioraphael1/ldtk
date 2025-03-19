@@ -1023,20 +1023,6 @@ namespace ldtk
         public string[] RequiredTags { get; set; }
 
         /// <summary>
-        /// If the tiles are smaller or larger than the layer grid, the pivot value will be used to
-        /// position the tile relatively its grid cell.
-        /// </summary>
-        [JsonProperty("tilePivotX")]
-        public double TilePivotX { get; set; }
-
-        /// <summary>
-        /// If the tiles are smaller or larger than the layer grid, the pivot value will be used to
-        /// position the tile relatively its grid cell.
-        /// </summary>
-        [JsonProperty("tilePivotY")]
-        public double TilePivotY { get; set; }
-
-        /// <summary>
         /// Reference to the default Tileset UID being used by this layer definition.<br/>
         /// **WARNING**: some layer *instances* might use a different tileset. So most of the time,
         /// you should probably use the `__tilesetDefUid` value found in layer instances.<br/>  Note:
@@ -1380,6 +1366,9 @@ namespace ldtk
         [JsonProperty("cachedPixelData")]
         public Dictionary<string, dynamic> CachedPixelData { get; set; }
 
+        [JsonProperty("color")]
+        public string Color { get; set; }
+
         /// <summary>
         /// An array of custom tile metadata
         /// </summary>
@@ -1411,6 +1400,12 @@ namespace ldtk
         /// </summary>
         [JsonProperty("padding")]
         public long Padding { get; set; }
+
+        [JsonProperty("pivotX")]
+        public double PivotX { get; set; }
+
+        [JsonProperty("pivotY")]
+        public double PivotY { get; set; }
 
         /// <summary>
         /// Image height in pixels

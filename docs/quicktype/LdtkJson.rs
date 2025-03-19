@@ -801,14 +801,6 @@ pub struct LayerDefinition {
     /// An array of tags to filter Entities that can be added to this layer
     pub required_tags: Vec<String>,
 
-    /// If the tiles are smaller or larger than the layer grid, the pivot value will be used to
-    /// position the tile relatively its grid cell.
-    pub tile_pivot_x: f64,
-
-    /// If the tiles are smaller or larger than the layer grid, the pivot value will be used to
-    /// position the tile relatively its grid cell.
-    pub tile_pivot_y: f64,
-
     /// Reference to the default Tileset UID being used by this layer definition.<br/>
     /// **WARNING**: some layer *instances* might use a different tileset. So most of the time,
     /// you should probably use the `__tilesetDefUid` value found in layer instances.<br/>  Note:
@@ -1040,6 +1032,8 @@ pub struct TilesetDefinition {
     /// source image changes.
     pub cached_pixel_data: Option<HashMap<String, Option<serde_json::Value>>>,
 
+    pub color: String,
+
     /// An array of custom tile metadata
     pub custom_data: Vec<TileCustomMetadata>,
 
@@ -1056,6 +1050,10 @@ pub struct TilesetDefinition {
 
     /// Distance in pixels from image borders
     pub padding: i64,
+
+    pub pivot_x: f64,
+
+    pub pivot_y: f64,
 
     /// Image height in pixels
     pub px_hei: i64,
