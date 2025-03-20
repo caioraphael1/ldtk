@@ -7,7 +7,7 @@ haxelib git ldtk-haxe-api https://github.com/caioraphael1/ldtk-haxe-api.git caio
 
 if %errorlevel% neq 0 (
     echo.
-    echo Erro no fetch.
+    echo ^> Erro.
     echo.
     pause
     exit /b %errorlevel%
