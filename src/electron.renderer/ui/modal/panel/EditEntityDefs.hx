@@ -35,6 +35,23 @@ class EditEntityDefs extends ui.modal.Panel {
 		jEntityList.parent().find("button.presets").click( (ev)->{
 			var ctx = new ContextMenu(ev);
 			ctx.addAction({
+				label: L.t._("Image"),
+				cb: ()->{
+					var ed = _createEntity();
+					ed.identifier = project.fixUniqueIdStr("Image", (s)->project.defs.isEntityIdentifierUnique(s));
+					ed.renderMode = Cross;
+					ed.hollow = true;
+					ed.resizableX = false;
+					ed.resizableY = false;
+					ed.keepAspectRatio = true;
+					ed.pivotX = ed.pivotY = 0;
+					ed.tileRenderMode = FullSizeUncropped;
+					ed.tags.set("image");
+					selectEntity(ed);
+					editor.ge.emit( EntityDefChanged );
+				}
+			});
+			ctx.addAction({
 				label: L.t._("Rectangle region"),
 				cb: ()->{
 					var ed = _createEntity();

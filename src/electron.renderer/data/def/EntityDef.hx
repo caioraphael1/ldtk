@@ -62,7 +62,7 @@ class EntityDef {
 		showName = true;
 		limitBehavior = MoveLastOne;
 		limitScope = PerLevel;
-		tileRenderMode = FitInside;
+		tileRenderMode = FullSizeUncropped;
 		nineSliceBorders = [];
 		identifier = "Entity"+uid;
 		setPivot(0.5,1);
@@ -178,7 +178,7 @@ class EntityDef {
 		o.uiTileRect = JsonTools.readTileRect(json.uiTileRect, true);
 
 		if( (cast json.tileRenderMode)=="Crop" ) json.tileRenderMode = cast "Cover";
-		o.tileRenderMode = JsonTools.readEnum(ldtk.Json.EntityTileRenderMode, json.tileRenderMode, false, FitInside);
+		o.tileRenderMode = JsonTools.readEnum(ldtk.Json.EntityTileRenderMode, json.tileRenderMode, false, FullSizeUncropped);
 		o.nineSliceBorders = JsonTools.readArray(json.nineSliceBorders, []);
 		if( o.tileRenderMode==NineSlice && o.nineSliceBorders.length!=4 )
 			o.nineSliceBorders = [2,2,2,2];
