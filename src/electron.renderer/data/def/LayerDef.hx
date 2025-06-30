@@ -32,6 +32,9 @@ class LayerDef {
 	public var uiFilterTags : Tags;
 	public var useAsyncRender = false;
 
+    public var ysort: Bool = false;
+    public var zindex: Int = 0;
+
 	// Entities
 	public var requiredTags : Tags;
 	public var excludedTags : Tags;
@@ -115,6 +118,9 @@ class LayerDef {
 		o.uiFilterTags = Tags.fromJson(json.uiFilterTags);
 		o.useAsyncRender = JsonTools.readBool(json.useAsyncRender, false);
 
+        o.zindex = JsonTools.readInt(json.zindex, 0);
+        o.ysort  = JsonTools.readBool(json.ysort, false);
+
 		o.requiredTags = Tags.fromJson(json.requiredTags);
 		o.excludedTags = Tags.fromJson(json.excludedTags);
 
@@ -192,6 +198,9 @@ class LayerDef {
 			autoTilesKilledByOtherLayerUid: autoTilesKilledByOtherLayerUid,
 			uiFilterTags: uiFilterTags.toJson(),
 			useAsyncRender: useAsyncRender,
+
+            ysort: ysort,
+            zindex: zindex,
 
 			intGridValues: intGridValues.map( function(iv) return {
 				value: iv.value,

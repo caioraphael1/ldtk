@@ -263,6 +263,14 @@ class EditLayerDefs extends ui.modal.Panel {
 		jContent.find("#typeSpecificTitle").text( cur.type.getName() );
 
 
+		var i = Input.linkToHtmlInput( cur.ysort, jForms.find("input[name='ysort']") );
+		i.onChange = editor.ge.emit.bind(LayerDefChanged(cur.uid, true));
+
+        var i = Input.linkToHtmlInput( cur.zindex, jForms.find("input[name='zindex']") );
+		// i.setBounds(-1000, 1000);
+		i.onChange = editor.ge.emit.bind(LayerDefChanged(cur.uid, true));
+
+
 		// Identifier
 		var i = Input.linkToHtmlInput( cur.identifier, jForms.find("input[name='name']") );
 		i.fixValue = (v)->project.fixUniqueIdStr(v, (id)->project.defs.isLayerNameUnique(id,cur));
